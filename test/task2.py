@@ -58,3 +58,4 @@ def check2(model):
         display_check(True, "Correct! The model architecture is as expected.")
     else:
         display_check(False, "Model architecture does not match the expected VGG-like structure.")
+
