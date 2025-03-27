@@ -55,7 +55,7 @@ def check2(model):
                     layer in model.layers]
 
     if model_layers == expected_layers:
-        display_check(True, "Correct! The model architecture is as expected.")
+        display_check(True, "Correct! Here is the next part of the key: HFI881")
     else:
         display_check(False, "Model architecture does not match the expected VGG-like structure.")
 

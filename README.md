@@ -1,0 +1,1 @@
+## Codefinity library for CNN project testing

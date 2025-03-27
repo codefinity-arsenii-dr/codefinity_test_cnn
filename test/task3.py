@@ -1,14 +1,12 @@
 import numpy as np
-import tensorflow as tf
-from sklearn.metrics import classification_report
 from utils import display_hint, display_solution, display_check
 
 
 def hint3():
     hint = """
 Ensure you evaluate the model using:
-- `model.evaluate()` to get accuracy.
-- `tf.math.confusion_matrix()` for confusion matrix.
+- `model.predict()` to generate predictions.
+- `np.argmax()` to convert predictions to class labels.
 - `classification_report()` from sklearn for precision, recall, and F1-score.
 """
     display_hint(hint)
@@ -16,35 +14,38 @@ Ensure you evaluate the model using:
 
 def solution3():
     code = """
-test_loss, test_acc = model.evaluate(x_test, y_test, verbose=2)
 y_pred = model.predict(x_test)
 y_pred_classes = np.argmax(y_pred, axis=1)
-y_true = np.argmax(y_test, axis=1)
-confusion_mtx = tf.math.confusion_matrix(y_true, y_pred_classes)
-report = classification_report(y_true, y_pred_classes)
+y_test_classes = np.argmax(y_test, axis=1)
+
+report = classification_report(y_test_classes, y_pred_classes, target_names=class_names)
+print(report)
 """
     display_solution(code)
 
+def check3(model, x_test, y_test, y_pred, y_pred_classes, y_test_classes):
+    expected_y_pred = model.predict(x_test)
+    expected_y_pred_classes = np.argmax(y_pred, axis=1)
+    expected_y_test_classes = np.argmax(y_test, axis=1)
 
-def check3(model, x_test, y_test):
-    test_results = model.evaluate(x_test, y_test, verbose=0)
-    if test_results is None or not isinstance(test_results, (list, tuple)):
-        display_check(False, "Model evaluation did not return valid results.")
-        return
+    if y_pred.shape != expected_y_pred.shape:
+        display_check(False, "Shape mismatch: expected {} but got {}".format(expected_y_pred.shape, y_pred.shape))
 
-    y_pred = model.predict(x_test)
-    if y_pred is None or not isinstance(y_pred, np.ndarray):
-        display_check(False, "Model prediction did not return a valid numpy array.")
-        return
+    elif y_pred.dtype != expected_y_pred.dtype:
+        display_check(False, "Data type mismatch: expected {} but got {}".format(expected_y_pred.dtype, y_pred.dtype))
 
-    y_pred_classes = np.argmax(y_pred, axis=1)
-    y_true = np.argmax(y_test, axis=1)
-    confusion_mtx = tf.math.confusion_matrix(y_true, y_pred_classes)
-    report = classification_report(y_true, y_pred_classes, output_dict=True)
+    elif y_pred_classes.shape != expected_y_pred_classes.shape:
+        display_check(False, "Shape mismatch in predicted and class labels: expected {} but got {}".format(expected_y_pred_classes.shape, y_pred_classes.shape))
 
-    if confusion_mtx is None or not isinstance(confusion_mtx, tf.Tensor):
-        display_check(False, "Confusion matrix is not valid.")
-    elif report is None or not isinstance(report, dict):
-        display_check(False, "Classification report is not valid.")
+    elif y_pred_classes.dtype != expected_y_pred_classes.dtype:
+        display_check(False, "Data type mismatch in predicted classes: expected {} but got {}".format(expected_y_pred_classes.dtype, y_pred_classes.dtype))
+
+    elif y_test_classes.shape != expected_y_test_classes.shape:
+        display_check(False, "Shape mismatch in predicted and test class labels: expected {} but got {}".format(
+            expected_y_test_classes.shape, y_pred_classes.shape))
+
+    elif y_test_classes.dtype != expected_y_test_classes.dtype:
+        display_check(False, "Data type mismatch in predicted classes: expected {} but got {}".format(expected_y_test_classes.dtype, y_pred_classes.dtype))
+
     else:
-        display_check(True, "Correct! Model evaluation has been properly conducted.")
+        display_check(True, "Correct! Here is the next part of the key: T543YU")

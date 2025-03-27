@@ -25,4 +25,4 @@ def check1(x_train, x_test, y_train, y_test):
     elif y_train.shape[1] != 10 or y_test.shape[1] != 10:
         display_check(False, "Labels are not correctly one-hot encoded.")
     else:
-        display_check(True, "Correct! Here is the next part of the key: XYZ123")
+        display_check(True, "Correct! Here is the next part of the key: BFA67U")
