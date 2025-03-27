@@ -1,6 +1,4 @@
-import keras
-from tensorflow.keras import layers
-from utils import display_hint, display_solution, display_check
+from testCNN.utils import display_hint, display_solution, display_check
 
 
 def hint2():

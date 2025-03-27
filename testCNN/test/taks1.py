@@ -1,5 +1,5 @@
 import numpy as np
-from utils import display_hint, display_solution, display_check
+from testCNN.utils import display_hint, display_solution, display_check
 
 def hint1():
     hint = """

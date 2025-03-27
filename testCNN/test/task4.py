@@ -1,6 +1,5 @@
 import numpy as np
-import tensorflow as tf
-from utils import display_hint, display_solution, display_check
+from testCNN.utils import display_hint, display_solution, display_check
 
 
 def hint4():
